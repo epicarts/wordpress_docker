@@ -23,21 +23,14 @@
 // define( 'DB_NAME', getenv('DB_NAME'));
 
 
-// /** MySQL database username */
-define( 'DB_USER', 'DB_USER');
-
-// /** MySQL database password */
-// define( 'DB_PASSWORD', getenv('DB_PASSWORD'));
-
-
-define( 'DB_NAME', 'wordpress_db');
-
 /** MySQL database username */
-// define( 'DB_USER', 'user');
+define( 'DB_USER', getenv('DB_USER'));
 
 /** MySQL database password */
-define( 'DB_PASSWORD', 'password');
+define( 'DB_PASSWORD', getenv('DB_PASSWORD'));
 
+/** MySQL database username */
+define( 'DB_NAME', getenv('DB_NAME'));
 
 /** MySQL hostname */
 define( 'DB_HOST', 'localhost' );

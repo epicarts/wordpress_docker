@@ -18,7 +18,8 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get -y install \
 	mariadb-server \
 	wget \
 	php-mysql \
-	php-mbstring
+	php-mbstring \
+	php-xml
 
 # wordpress config
 RUN wget https://wordpress.org/${WORDPRESS_VER}.tar.gz && \
@@ -28,12 +29,14 @@ RUN wget https://wordpress.org/${WORDPRESS_VER}.tar.gz && \
 	chown -R www-data:www-data /var/www/html/wordpress
 COPY ./srcs/wordpress/wp-config.php /var/www/html/wordpress/wp-config.php
 
+# pypmyadmin config
 RUN wget https://files.phpmyadmin.net/phpMyAdmin/${PHP_MYADMIN_VER}/phpMyAdmin-${PHP_MYADMIN_VER}-all-languages.tar.gz && \
 	tar -xvf phpMyAdmin-${PHP_MYADMIN_VER}-all-languages.tar.gz && \
 	rm phpMyAdmin-${PHP_MYADMIN_VER}-all-languages.tar.gz && \
 	mv phpMyAdmin-${PHP_MYADMIN_VER}-all-languages phpmyadmin && \
-	mv phpmyadmin /var/www/html/ && \
-	cp -rp var/www/html/phpmyadmin/config.sample.inc.php var/www/html/phpmyadmin/config.inc.php 
+	mv phpmyadmin /var/www/html/
+COPY ./srcs/phpmyadmin/config.inc.php /var/www/html/phpmyadmin/config.inc.php
+
 
 # ssl config
 COPY ./srcs/openssl/ openssl/
@@ -46,4 +49,4 @@ EXPOSE 80 443
 
 # start server
 COPY ./srcs/entrypoint.sh ./
-ENTRYPOINT ./entrypoint.sh
+ENTRYPOINT  ["./entrypoint.sh"]
